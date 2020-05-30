@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import './Path.css'
+import Header from './header'
 
 // const HEIGHT = 9;
 // const WIDTH = 16;
@@ -30,6 +31,9 @@ class Path extends Component {
     render () {
         return (
             <div className='path-root'>
+                <Header
+                
+                />
                 <div className='path-grid'>
                     {this.state.grid.map((row, index) => {
                         return(
