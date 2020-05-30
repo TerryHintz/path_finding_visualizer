@@ -14,6 +14,15 @@ class Path extends Component {
         this.createGrid();
     }
 
+    handleButton = (method) => {
+        switch (method){
+            case 'animate':
+                console.log('animate');
+                break;
+        }
+
+    }
+
     createGrid = () => {
         const width = window.innerWidth / 32;
         const height = window.innerHeight / 40;
@@ -32,7 +41,7 @@ class Path extends Component {
         return (
             <div className='path-root'>
                 <Header
-                
+                    handleButton = {this.handleButton}
                 />
                 <div className='path-grid'>
                     {this.state.grid.map((row, index) => {

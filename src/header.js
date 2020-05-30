@@ -37,6 +37,7 @@ class Header extends Component {
                             className={'header-button'}
                             style={{backgroundColor: this.props.working ? 'red' : 'limegreen'}}
                             variant='contained'
+                            onClick={() => this.props.handleButton('animate')}
                         >
                             {this.props.working ? 'Terminate' : 'Animate'}
                         </Button>
