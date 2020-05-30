@@ -1,0 +1,24 @@
+.path-root {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.path-grid {
+    border-left: 1px solid cornflowerblue;
+    border-top: 1px solid cornflowerblue;
+}
+
+.path-square {
+    height: 30px;
+    width: 30px;
+    border: 1px solid cornflowerblue;
+    border-left: none;
+    border-top: none;
+}
+
+.path-row {
+    display: flex;
+}
