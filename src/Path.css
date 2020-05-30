@@ -38,12 +38,6 @@
     align-items: center;
 }
 
-.disable-button {
-    box-shadow: none !important;
-    background-color: #a6a6a6 !important;
-    color: white !important;
-}
-
 .header-button {
     color: white !important;
     margin: 0 8px !important;

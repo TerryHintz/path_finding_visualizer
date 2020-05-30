@@ -25,7 +25,10 @@ class Path extends Component {
 
     createGrid = () => {
         const width = window.innerWidth / 32;
-        const height = window.innerHeight / 40;
+        let height = window.innerHeight / 39;
+        if(height < 20){
+            height = 20;
+        }
         let grid = [];
         for(let i=0; i<height; i++){
             let row = [];
