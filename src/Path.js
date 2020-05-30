@@ -10,6 +10,8 @@ import {dfs} from './Algorithms'
 class Path extends Component {
     state = {
         grid: [],
+        start: {},
+        end: {},
     }
 
     componentDidMount(){
@@ -19,7 +21,7 @@ class Path extends Component {
     handleButton = (method) => {
         switch (method){
             case 'animate':
-                console.log('animate');
+                dfs(this.state.grid, this.state.start, this.state.end);
                 break;
         }
 
@@ -50,7 +52,9 @@ class Path extends Component {
         }
         grid[startY][startX] = 's';
         grid[endY][endX] = 'e';
-        this.setState({grid});
+        const start = {startX, startY};
+        const end = {endX, endY};
+        this.setState({grid, start, end});
     }
 
     render () {
