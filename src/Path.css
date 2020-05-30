@@ -22,6 +22,11 @@
     display: flex;
 }
 
+.path-icon {
+    width: 30px !important;
+    height: 30px !important;
+}
+
 .header {
     height: 75px;
     display: flex;

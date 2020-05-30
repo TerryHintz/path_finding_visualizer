@@ -2,8 +2,10 @@ import React, {Component} from 'react';
 import './Path.css'
 import Header from './header'
 
-// const HEIGHT = 9;
-// const WIDTH = 16;
+import StartIcon from '@material-ui/icons/PlayArrow';
+import TargetIcon from '@material-ui/icons/FilterTiltShift';
+
+import {dfs} from './Algorithms'
 
 class Path extends Component {
     state = {
@@ -24,8 +26,8 @@ class Path extends Component {
     }
 
     createGrid = () => {
-        const width = window.innerWidth / 32;
-        let height = window.innerHeight / 39;
+        const width = Math.floor(window.innerWidth / 32);
+        let height = Math.floor(window.innerHeight / 39);
         if(height < 20){
             height = 20;
         }
@@ -33,10 +35,21 @@ class Path extends Component {
         for(let i=0; i<height; i++){
             let row = [];
             for(let j=0; j<width; j++){
-                row.push(null);
+                const random = Math.floor(Math.random() * 4);
+                row.push(random === 0 ? 1 : 0);
             }
             grid.push(row);
         }
+        const startX = Math.floor(Math.random() * width);
+        let startY = Math.floor(Math.random() * height);
+        const endX = Math.floor(Math.random() * width);
+        let endY = Math.floor(Math.random() * height);
+        while(startY === endY){
+            startY = Math.floor(Math.random() * height);
+            endY = Math.floor(Math.random() * height);
+        }
+        grid[startY][startX] = 's';
+        grid[endY][endX] = 'e';
         this.setState({grid});
     }
 
@@ -52,7 +65,13 @@ class Path extends Component {
                             <div key={index} className='path-row'>
                                 {row.map((square, index) => {
                                     return (
-                                        <div key={index} className='path-square'></div>
+                                        <div
+                                            key={index}
+                                            className='path-square'
+                                            style={{backgroundColor: square === 0 ? 'white' : square === 1 ? 'cornflowerblue' : 'white'}}
+                                        >
+                                            {square === 0 ? '' : square === 1 ? '' : square === 's' ? <StartIcon className='path-icon'/> : <TargetIcon className='path-icon'/>}
+                                        </div>
                                     )
                                 })}
                             </div>
