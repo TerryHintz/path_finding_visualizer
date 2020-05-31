@@ -31,7 +31,7 @@ class Path extends Component {
     }
 
     animate = (res) => {
-        const SPEED = 200;
+        const SPEED = 20;
         const trail = res[0];
         const search = res[1];
         const trailLen = trail.length;
@@ -44,13 +44,16 @@ class Path extends Component {
         for(i; i<searchLen; i++){
             const index = search[i].y * width + search[i].x;
             window.setTimeout(() => {
-                squares[index].style.backgroundColor = 'firebrick';
+                squares[index].style.backgroundColor = 'red';
             }, i * SPEED);
+            window.setTimeout(() => {
+                squares[index].style.backgroundColor = 'firebrick';
+            }, i * SPEED + SPEED);
         }
         for(let j=0; j<trailLen; j++){
             const index2 = trail[j].y * width + trail[j].x;
             window.setTimeout(() => {
-                squares[index2].style.backgroundColor = 'seagreen';
+                squares[index2].style.backgroundColor = 'ForestGreen';
             }, j * SPEED + i * SPEED);
         }
         
@@ -62,13 +65,13 @@ class Path extends Component {
         if(height < 20){
             height = 20;
         }
-        height = 10;
-        width = 20;
+        // height = 10;
+        // width = 20;
         let grid = [];
         for(let i=0; i<height; i++){
             let row = [];
             for(let j=0; j<width; j++){
-                const random = Math.floor(Math.random() * 4);
+                const random = Math.floor(Math.random() * 3);
                 row.push(random === 0 ? 1 : 0);
             }
             grid.push(row);
