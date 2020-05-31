@@ -28,11 +28,13 @@ class Path extends Component {
     }
 
     createGrid = () => {
-        const width = Math.floor(window.innerWidth / 32);
+        let width = Math.floor(window.innerWidth / 32);
         let height = Math.floor(window.innerHeight / 39);
         if(height < 20){
             height = 20;
         }
+        height = 10;
+        width = 20;
         let grid = [];
         for(let i=0; i<height; i++){
             let row = [];

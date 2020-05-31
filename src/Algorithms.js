@@ -4,10 +4,64 @@ export function dfs(grid, start, end) {
     let y = start.startY;
     const endX = end.endX;
     const endY = end.endY;
+    const xMax = grid[0].length - 1;
+    const yMax = grid.length - 1;
 
-    // while(x != endX && y != endY){
-        console.log(getPriority(x, y, endX, endY));
-    // }
+    let trail = [];
+
+    while(x !== endX || y !== endY){
+        console.log(x + ', ' + y);
+        let priority = (getPriority(x, y, endX, endY));
+        while(priority.length){
+            if(priority[0] === 'left'){
+                if(x > 0){
+                    if(gridCopy[y][x-1] === 0 || gridCopy[y][x-1] === 'e'){
+                        trail.push({x, y});
+                        gridCopy[y][x-1] = 'v';
+                        x = x - 1;
+                        break;
+                    }
+                }
+            } else if(priority[0] === 'up'){
+                if(y > 0){
+                    if(gridCopy[y-1][x] === 0 || gridCopy[y-1][x] === 'e'){
+                        trail.push({x, y});
+                        gridCopy[y-1][x] = 'v';
+                        y = y - 1;
+                        break;
+                    }
+                }
+            } else if(priority[0] === 'right'){
+                if(x < xMax){
+                    if(gridCopy[y][x+1] === 0 || gridCopy[y][x+1] === 'e'){
+                        trail.push({x, y});
+                        gridCopy[y][x+1] = 'v';
+                        x = x + 1;
+                        break;
+                    }
+                }
+            } else if(priority[0] === 'down'){
+                if(y < yMax){
+                    if(gridCopy[y+1][x] === 0 || gridCopy[y+1][x] === 'e'){
+                        trail.push({x, y});
+                        gridCopy[y+1][x] = 'v';
+                        y = y + 1;
+                        break;
+                    }
+                }
+            }
+            priority.shift();
+        }
+        if(priority.length === 0){
+            let prev = trail.pop();
+            if(prev.x === x && prev.y === y){
+                prev = trail.pop();
+            }
+            x = prev.x;
+            y = prev.y;
+        }
+    }
+    console.log('found exit at ' + x + ', ' + y);
 }
 
 function getPriority(x, y, endX, endY){
