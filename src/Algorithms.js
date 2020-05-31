@@ -8,8 +8,10 @@ export function dfs(grid, start, end) {
     const yMax = grid.length - 1;
 
     let trail = [];
+    let search = [];
 
     while(x !== endX || y !== endY){
+        search.push({x, y});
         console.log(x + ', ' + y);
         let priority = (getPriority(x, y, endX, endY));
         while(priority.length){
@@ -53,6 +55,10 @@ export function dfs(grid, start, end) {
             priority.shift();
         }
         if(priority.length === 0){
+            if(trail.length === 0){
+                console.log('no path');
+                return null;
+            }
             let prev = trail.pop();
             if(prev.x === x && prev.y === y){
                 prev = trail.pop();
@@ -61,7 +67,11 @@ export function dfs(grid, start, end) {
             y = prev.y;
         }
     }
+    trail.push({x, y});
+    search.push({x, y});
     console.log('found exit at ' + x + ', ' + y);
+    console.log(trail);
+    return [trail, search, xMax + 1];
 }
 
 function getPriority(x, y, endX, endY){

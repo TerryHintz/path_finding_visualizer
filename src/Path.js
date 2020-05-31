@@ -21,10 +21,39 @@ class Path extends Component {
     handleButton = (method) => {
         switch (method){
             case 'animate':
-                dfs(this.state.grid, this.state.start, this.state.end);
+                const res = dfs(this.state.grid, this.state.start, this.state.end);
+                if(res){
+                    this.animate(res);
+                }
                 break;
         }
 
+    }
+
+    animate = (res) => {
+        const SPEED = 200;
+        const trail = res[0];
+        const search = res[1];
+        const trailLen = trail.length;
+        const searchLen = search.length;
+        const width = res[2];
+
+        const squares = document.getElementsByClassName('path-square');
+
+        let i = 0;
+        for(i; i<searchLen; i++){
+            const index = search[i].y * width + search[i].x;
+            window.setTimeout(() => {
+                squares[index].style.backgroundColor = 'firebrick';
+            }, i * SPEED);
+        }
+        for(let j=0; j<trailLen; j++){
+            const index2 = trail[j].y * width + trail[j].x;
+            window.setTimeout(() => {
+                squares[index2].style.backgroundColor = 'seagreen';
+            }, j * SPEED + i * SPEED);
+        }
+        
     }
 
     createGrid = () => {
