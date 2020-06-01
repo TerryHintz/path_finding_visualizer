@@ -34,7 +34,7 @@
     align-items: center;
     background-color: black;
     color: white;
-    margin-bottom: 50px;
+    margin-bottom: 20px;
     width: 100%;
 }
 
@@ -63,4 +63,8 @@
     padding-left: 20px;
     font-size: 20px;
     font-weight: 600;
+}
+
+.path-control-panel {
+    margin-top: 20px;
 }

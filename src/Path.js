@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import './Path.css'
 import Header from './header'
+import Controls from './Controls'
 
 import StartIcon from '@material-ui/icons/PlayArrow';
 import TargetIcon from '@material-ui/icons/FilterTiltShift';
@@ -10,6 +11,14 @@ import {bfs} from './Algorithms'
 
 var timeouts = [];
 
+const speed_dictionary = {
+    Slowest: 500,
+    Slow: 200,
+    Medium: 50,
+    Fast: 20,
+    Fastest: 5,
+}
+
 class Path extends Component {
     state = {
         grid: [],
@@ -18,6 +27,7 @@ class Path extends Component {
         method: 'Depth First Search',
         animating: false,
         animated: false,
+        speed: 'Medium',
     }
 
     componentDidMount(){
@@ -56,7 +66,10 @@ class Path extends Component {
                 console.warn('Case not found');
                 break;
         }
+    }
 
+    handleSpeed = (speed) => {
+        this.setState({speed});
     }
 
     terminate = () => {
@@ -67,7 +80,7 @@ class Path extends Component {
     }
 
     animate = (res) => {
-        const SPEED = 20;
+        const SPEED = speed_dictionary[this.state.speed];
         const trail = res[0];
         const search = res[1];
         const trailLen = trail.length;
@@ -104,8 +117,6 @@ class Path extends Component {
         if(height < 20){
             height = 20;
         }
-        // height = 10;
-        // width = 10;
         let grid = [];
         for(let i=0; i<height; i++){
             let row = [];
@@ -170,6 +181,11 @@ class Path extends Component {
                         )
                     })}
                 </div>
+                <Controls
+                    handleSpeed = {this.handleSpeed}
+                    speed = {this.state.speed}
+                    animating = {this.state.animating}
+                />
             </div>
         )
     }

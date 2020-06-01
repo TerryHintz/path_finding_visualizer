@@ -137,9 +137,6 @@ export function bfs(grid, start, end){
         const x = current.x;
         const y = current.y;
         let distance = current.distance;
-        
-        console.log(x + ', ' + y + ', D=' + distance);
-
         // left
         if(x > 0){
             if(gridCopy[y][x-1] === 0){
