@@ -38,12 +38,21 @@ class Header extends Component {
                     </div>
                     <div className='header-section'>
                         <Button
+                            disabled={this.props.animated}
                             className={'header-button'}
-                            style={{backgroundColor: this.props.working ? 'red' : 'limegreen'}}
+                            style={{backgroundColor: this.props.animated ? 'grey' : '#3f51b5'}}
                             variant='contained'
-                            onClick={() => this.props.handleButton('animate')}
+                            onClick={() => this.props.handleButton('randomize')}
                         >
-                            {this.props.working ? 'Terminate' : 'Animate'}
+                            {'Randomize Grid'}
+                        </Button>
+                        <Button
+                            className={'header-button'}
+                            style={{backgroundColor: this.props.animated ? 'firebrick' : 'limegreen'}}
+                            variant='contained'
+                            onClick={() => this.props.handleButton(this.props.animated ? 'terminate' : 'animate')}
+                        >
+                            {this.props.animated ? 'Terminate' : 'Animate'}
                         </Button>
                         {/* <Button
                             className={this.props.working ? 'mobile-sort disable-button header-button' : 'mobile-sort header-button'}

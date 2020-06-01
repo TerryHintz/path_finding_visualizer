@@ -66,6 +66,7 @@ export function dfs(grid, start, end) {
             y = prev.y;
         }
     }
+    gridCopy[endY][endX] = 'e';
     trail.push({x, y});
     search.push({x, y});
     console.log('found exit at ' + x + ', ' + y);

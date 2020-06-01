@@ -7,12 +7,15 @@ import TargetIcon from '@material-ui/icons/FilterTiltShift';
 
 import {dfs} from './Algorithms'
 
+var timeouts = [];
+
 class Path extends Component {
     state = {
         grid: [],
         start: {},
         end: {},
         method: 'Depth First Search',
+        animated: false,
     }
 
     componentDidMount(){
@@ -23,12 +26,20 @@ class Path extends Component {
         switch (method){
             case 'animate':
                 let res;
+                const copy = this.state.grid.slice(0);
                 if(this.state.method === 'Depth First Search'){
-                    res = dfs(this.state.grid, this.state.start, this.state.end);
+                    res = dfs(copy, this.state.start, this.state.end);
                 }
                 if(res){
+                    this.setState({animated: true});
                     this.animate(res);
                 }
+                break;
+            case 'terminate':
+                this.terminate();
+                break;
+            case 'randomize':
+                this.createGrid();
                 break;
             case 'Depth First Search':
                 this.setState({method: 'Depth First Search'});
@@ -41,6 +52,13 @@ class Path extends Component {
                 break;
         }
 
+    }
+
+    terminate = () => {
+        for (var i=0; i<timeouts.length; i++) {
+            clearTimeout(timeouts[i]);
+        }
+        this.setState({animated: false});
     }
 
     animate = (res) => {
@@ -56,20 +74,23 @@ class Path extends Component {
         let i = 0;
         for(i; i<searchLen; i++){
             const index = search[i].y * width + search[i].x;
-            window.setTimeout(() => {
+            timeouts.push(window.setTimeout(() => {
                 squares[index].style.backgroundColor = 'red';
-            }, i * SPEED);
-            window.setTimeout(() => {
+            }, i * SPEED));
+            timeouts.push(window.setTimeout(() => {
                 squares[index].style.backgroundColor = 'firebrick';
-            }, i * SPEED + SPEED);
+            }, i * SPEED + SPEED));
         }
-        for(let j=0; j<trailLen; j++){
+        let j = 0;
+        for(j; j<trailLen; j++){
             const index2 = trail[j].y * width + trail[j].x;
-            window.setTimeout(() => {
-                squares[index2].style.backgroundColor = 'ForestGreen';
-            }, j * SPEED + i * SPEED);
+            timeouts.push(window.setTimeout(() => {
+                squares[index2].style.backgroundColor = 'forestgreen';
+            }, j * SPEED + i * SPEED));
         }
-        
+        timeouts.push(window.setTimeout(() => {
+            this.setState({animated: false});
+        }, j * SPEED + i * SPEED));
     }
 
     createGrid = () => {
@@ -79,7 +100,7 @@ class Path extends Component {
             height = 20;
         }
         // height = 10;
-        // width = 20;
+        // width = 10;
         let grid = [];
         for(let i=0; i<height; i++){
             let row = [];
@@ -101,7 +122,19 @@ class Path extends Component {
         grid[endY][endX] = 'e';
         const start = {startX, startY};
         const end = {endX, endY};
+        this.resetColor();
         this.setState({grid, start, end});
+    }
+
+    resetColor = () => {
+        const squares = document.getElementsByClassName('path-square');
+        const nums = squares.length;
+        for(let i=0; i<nums; i++){
+            const square = squares[i].style.backgroundColor;
+            if(square === 'firebrick' || square === 'forestgreen'){
+                squares[i].style.backgroundColor = 'white';
+            }
+        }
     }
 
     render () {
@@ -110,6 +143,7 @@ class Path extends Component {
                 <Header
                     handleButton = {this.handleButton}
                     method = {this.state.method}
+                    animated = {this.state.animated}
                 />
                 <div className='path-grid'>
                     {this.state.grid.map((row, index) => {
@@ -122,7 +156,7 @@ class Path extends Component {
                                             className='path-square'
                                             style={{backgroundColor: square === 0 ? 'white' : square === 1 ? 'cornflowerblue' : 'white'}}
                                         >
-                                            {square === 0 ? '' : square === 1 ? '' : square === 's' ? <StartIcon className='path-icon'/> : <TargetIcon className='path-icon'/>}
+                                            {square === 0 ? '' : square === 1 ? '' : square === 's' ? <StartIcon className='path-icon'/> : square === 'e' ? <TargetIcon className='path-icon'/> : ''}
                                         </div>
                                     )
                                 })}
