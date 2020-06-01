@@ -12,7 +12,7 @@ export function dfs(grid, start, end) {
 
     while(x !== endX || y !== endY){
         search.push({x, y});
-        let priority = (getPriority(x, y, endX, endY));
+        let priority = getPriority(x, y, endX, endY);
         while(priority.length){
             if(priority[0] === 'left'){
                 if(x > 0){
@@ -115,6 +115,59 @@ function getPriority(x, y, endX, endY){
             return ['down', 'left', 'up', 'right'];
         } else {
             return ['down', 'right', 'up', 'left'];
+        }
+    }
+}
+
+export function bfs(grid, start, end){
+    let gridCopy = grid;
+    const endX = end.endX;
+    const endY = end.endY;
+    const xMax = grid[0].length - 1;
+    const yMax = grid.length - 1;
+
+    let queue = [];
+    let trail = [];
+
+    queue.push({x: start.startX, y: start.startY, distance: 0});
+    // trail.push({x, y, distance: 0, prev: null});
+
+    while(queue.length){
+        let current = queue.shift();
+        const x = current.x;
+        const y = current.y;
+        let distance = current.distance;
+
+        gridCopy[y][x] = 'v';
+        console.log(x + ', ' + y + ', D=' + distance);
+
+        if(x === endX && y === endY){
+            console.log('exit');
+            return;
+        }
+        // left
+        if(x > 0){
+            if(gridCopy[y][x-1] === 0 || gridCopy[y][x-1] === 'e'){
+                queue.push({x: x-1, y: y, distance: distance + 1});
+            }
+        }
+        // up
+        if(y > 0){
+            if(gridCopy[y-1][x] === 0 || gridCopy[y-1][x] === 'e'){
+                queue.push({x: x, y: y-1, distance: distance + 1});
+            }
+        }
+        // right
+        if(x < xMax){
+            if(gridCopy[y][x+1] === 0 || gridCopy[y][x+1] === 'e'){
+                queue.push({x: x+1, y: y, distance: distance + 1});
+            }
+        }
+        // down
+        if(y < yMax){
+            if(gridCopy[y+1][x] === 0 || gridCopy[y+1][x] === 'e'){
+                queue.push({x: x, y: y+1, distance: distance + 1});
+            }
         }
     }
 }

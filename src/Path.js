@@ -6,6 +6,7 @@ import StartIcon from '@material-ui/icons/PlayArrow';
 import TargetIcon from '@material-ui/icons/FilterTiltShift';
 
 import {dfs} from './Algorithms'
+import {bfs} from './Algorithms'
 
 var timeouts = [];
 
@@ -14,7 +15,7 @@ class Path extends Component {
         grid: [],
         start: {},
         end: {},
-        method: 'Depth First Search',
+        method: 'Breadth First Search',
         animated: false,
     }
 
@@ -29,6 +30,9 @@ class Path extends Component {
                 const copy = this.state.grid.slice(0);
                 if(this.state.method === 'Depth First Search'){
                     res = dfs(copy, this.state.start, this.state.end);
+                }
+                if(this.state.method === 'Breadth First Search'){
+                    res = bfs(copy, this.state.start, this.state.end);
                 }
                 if(res){
                     this.setState({animated: true});
@@ -99,8 +103,8 @@ class Path extends Component {
         if(height < 20){
             height = 20;
         }
-        // height = 10;
-        // width = 10;
+        height = 10;
+        width = 10;
         let grid = [];
         for(let i=0; i<height; i++){
             let row = [];
@@ -131,7 +135,7 @@ class Path extends Component {
         const nums = squares.length;
         for(let i=0; i<nums; i++){
             const square = squares[i].style.backgroundColor;
-            if(square === 'firebrick' || square === 'forestgreen'){
+            if(square === 'firebrick' || square === 'forestgreen' || square === 'red'){
                 squares[i].style.backgroundColor = 'white';
             }
         }
