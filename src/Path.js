@@ -15,7 +15,8 @@ class Path extends Component {
         grid: [],
         start: {},
         end: {},
-        method: 'Breadth First Search',
+        method: 'Depth First Search',
+        animating: false,
         animated: false,
     }
 
@@ -35,7 +36,7 @@ class Path extends Component {
                     res = bfs(copy, this.state.start, this.state.end);
                 }
                 if(res){
-                    this.setState({animated: true});
+                    this.setState({animating: true});
                     this.animate(res);
                 }
                 break;
@@ -62,7 +63,7 @@ class Path extends Component {
         for (var i=0; i<timeouts.length; i++) {
             clearTimeout(timeouts[i]);
         }
-        this.setState({animated: false});
+        this.setState({animating: false, animated: true});
     }
 
     animate = (res) => {
@@ -93,7 +94,7 @@ class Path extends Component {
             }, j * SPEED + i * SPEED));
         }
         timeouts.push(window.setTimeout(() => {
-            this.setState({animated: false});
+            this.setState({animating: false, animated: true});
         }, j * SPEED + i * SPEED));
     }
 
@@ -127,7 +128,7 @@ class Path extends Component {
         const start = {startX, startY};
         const end = {endX, endY};
         this.resetColor();
-        this.setState({grid, start, end});
+        this.setState({grid, start, end, animated: false});
     }
 
     resetColor = () => {
@@ -147,6 +148,7 @@ class Path extends Component {
                 <Header
                     handleButton = {this.handleButton}
                     method = {this.state.method}
+                    animating = {this.state.animating}
                     animated = {this.state.animated}
                 />
                 <div className='path-grid'>

@@ -24,7 +24,6 @@ class Header extends Component {
                         {path_algorithms.map((method) => {
                             return (
                                 <Button
-                                    // disabled={this.props.working}
                                     className={'header-button'}
                                     style={{backgroundColor: this.props.method === method ? 'rgb(220, 0, 78)' : '#3f51b5'}}
                                     key={method}
@@ -38,44 +37,24 @@ class Header extends Component {
                     </div>
                     <div className='header-section'>
                         <Button
-                            disabled={this.props.animated}
+                            disabled={this.props.animating}
                             className={'header-button'}
-                            style={{backgroundColor: this.props.animated ? 'grey' : '#3f51b5'}}
+                            style={{backgroundColor: this.props.animating ? 'grey' : '#3f51b5'}}
                             variant='contained'
                             onClick={() => this.props.handleButton('randomize')}
                         >
                             {'Randomize Grid'}
                         </Button>
                         <Button
+                            disabled={this.props.animated}
                             className={'header-button'}
-                            style={{backgroundColor: this.props.animated ? 'firebrick' : 'limegreen'}}
+                            style={{backgroundColor: this.props.animated ? 'grey' : this.props.animating ? 'firebrick' : 'limegreen'}}
                             variant='contained'
-                            onClick={() => this.props.handleButton(this.props.animated ? 'terminate' : 'animate')}
+                            onClick={() => this.props.handleButton(this.props.animating ? 'terminate' : 'animate')}
                         >
-                            {this.props.animated ? 'Terminate' : 'Animate'}
+                            {this.props.animating ? 'Terminate' : 'Animate'}
                         </Button>
-                        {/* <Button
-                            className={this.props.working ? 'mobile-sort disable-button header-button' : 'mobile-sort header-button'}
-                            style={{backgroundColor: '#3f51b5'}}
-                            onClick={() => this.toggleDrawer()}
-                        >
-                            {'Algorithms'}
-                        </Button> */}
                     </div>
-                    {/* <Drawer anchor={'bottom'} open={this.state.drawer} onClose={() => this.toggleDrawer()}>
-                        {sorting_methods.map((method) => {
-                            return (
-                                <div
-                                    key={method + ' mobile'}
-                                    onClick={() => this.props.handleSort(method, [], 0)}
-                                    style={{backgroundColor: this.props.selected === method ? 'salmon' : 'white'}}
-                                    className='mobile-button'
-                                >
-                                    {method}
-                                </div>
-                            )
-                        })}
-                    </Drawer> */}
                 </div>
         )
     }
