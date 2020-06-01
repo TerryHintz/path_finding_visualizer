@@ -127,7 +127,7 @@ export function bfs(grid, start, end){
     const yMax = grid.length - 1;
 
     let queue = [];
-    let trail = [];
+    let search = [];
 
     queue.push({x: start.startX, y: start.startY, distance: 0});
     // trail.push({x, y, distance: 0, prev: null});
@@ -137,36 +137,51 @@ export function bfs(grid, start, end){
         const x = current.x;
         const y = current.y;
         let distance = current.distance;
-
-        gridCopy[y][x] = 'v';
+        
         console.log(x + ', ' + y + ', D=' + distance);
 
-        if(x === endX && y === endY){
-            console.log('exit');
-            return;
-        }
         // left
         if(x > 0){
-            if(gridCopy[y][x-1] === 0 || gridCopy[y][x-1] === 'e'){
+            if(gridCopy[y][x-1] === 0){
+                gridCopy[y][x-1] = 'v';
                 queue.push({x: x-1, y: y, distance: distance + 1});
+                search.push({x: x-1, y: y, distance: distance + 1});
+            } else if(gridCopy[y][x-1] === 'e') {
+                search.push({x: x-1, y: y, distance: distance + 1});
+                return [[], search, xMax + 1];
             }
         }
         // up
         if(y > 0){
-            if(gridCopy[y-1][x] === 0 || gridCopy[y-1][x] === 'e'){
+            if(gridCopy[y-1][x] === 0){
+                gridCopy[y-1][x] = 'v';
                 queue.push({x: x, y: y-1, distance: distance + 1});
+                search.push({x: x, y: y-1, distance: distance + 1});
+            } else if(gridCopy[y-1][x] === 'e') {
+                search.push({x: x, y: y-1, distance: distance + 1});
+                return [[], search, xMax + 1];
             }
         }
         // right
         if(x < xMax){
-            if(gridCopy[y][x+1] === 0 || gridCopy[y][x+1] === 'e'){
+            if(gridCopy[y][x+1] === 0){
+                gridCopy[y][x+1] = 'v';
                 queue.push({x: x+1, y: y, distance: distance + 1});
+                search.push({x: x+1, y: y, distance: distance + 1});
+            } else if(gridCopy[y][x+1] === 'e') {
+                search.push({x: x+1, y: y, distance: distance + 1});
+                return [[], search, xMax + 1];
             }
         }
         // down
         if(y < yMax){
-            if(gridCopy[y+1][x] === 0 || gridCopy[y+1][x] === 'e'){
+            if(gridCopy[y+1][x] === 0){
+                gridCopy[y+1][x] = 'v';
                 queue.push({x: x, y: y+1, distance: distance + 1});
+                search.push({x: x, y: y+1, distance: distance + 1});
+            } else if(gridCopy[y+1][x] === 'e') {
+                search.push({x: x, y: y+1, distance: distance + 1});
+                return [[], search, xMax + 1];
             }
         }
     }

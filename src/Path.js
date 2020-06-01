@@ -103,8 +103,8 @@ class Path extends Component {
         if(height < 20){
             height = 20;
         }
-        height = 10;
-        width = 10;
+        // height = 10;
+        // width = 10;
         let grid = [];
         for(let i=0; i<height; i++){
             let row = [];
