@@ -12,6 +12,7 @@ class Path extends Component {
         grid: [],
         start: {},
         end: {},
+        method: 'Depth First Search',
     }
 
     componentDidMount(){
@@ -21,10 +22,22 @@ class Path extends Component {
     handleButton = (method) => {
         switch (method){
             case 'animate':
-                const res = dfs(this.state.grid, this.state.start, this.state.end);
+                let res;
+                if(this.state.method === 'Depth First Search'){
+                    res = dfs(this.state.grid, this.state.start, this.state.end);
+                }
                 if(res){
                     this.animate(res);
                 }
+                break;
+            case 'Depth First Search':
+                this.setState({method: 'Depth First Search'});
+                break;
+            case 'Breadth First Search':
+                this.setState({method: 'Breadth First Search'});
+                break;
+            default:
+                console.warn('Case not found');
                 break;
         }
 
@@ -96,6 +109,7 @@ class Path extends Component {
             <div className='path-root'>
                 <Header
                     handleButton = {this.handleButton}
+                    method = {this.state.method}
                 />
                 <div className='path-grid'>
                     {this.state.grid.map((row, index) => {

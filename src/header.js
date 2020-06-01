@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
 import './Path.css';
 import Button from '@material-ui/core/Button';
-import Drawer from '@material-ui/core/Drawer';
+// import Drawer from '@material-ui/core/Drawer';
 
 const path_algorithms = [
-    
+    'Depth First Search',
+    'Breadth First Search',
 ];
 
 class Header extends Component {
@@ -20,17 +21,20 @@ class Header extends Component {
         return(
             <div className='header'>
                     <div className='header-section'>
-                        {/* <span className='header-text'>{'Numbers:'}</span> */}
-                        
-                        {/* <Button
-                            color='primary'
-                            variant="contained"
-                            className={this.props.working ? 'disable-button header-button' : 'header-button'}
-                            disabled={this.props.working}
-                            onClick={() => this.props.randomizeArray(this.state.numsInput, true)}
-                        >
-                            {'Random'}
-                        </Button> */}
+                        {path_algorithms.map((method) => {
+                            return (
+                                <Button
+                                    // disabled={this.props.working}
+                                    className={'header-button'}
+                                    style={{backgroundColor: this.props.method === method ? 'rgb(220, 0, 78)' : '#3f51b5'}}
+                                    key={method}
+                                    variant='contained'
+                                    onClick={() => this.props.handleButton(method)}
+                                >
+                                    {method}
+                                </Button>
+                            )
+                        })}
                     </div>
                     <div className='header-section'>
                         <Button
@@ -41,20 +45,6 @@ class Header extends Component {
                         >
                             {this.props.working ? 'Terminate' : 'Animate'}
                         </Button>
-                        {path_algorithms.map((method) => {
-                            return (
-                                <Button
-                                    // disabled={this.props.working}
-                                    className={'header-button'}
-                                    // style={{backgroundColor: this.props.selected === method ? 'rgb(220, 0, 78)' : '#3f51b5'}}
-                                    key={method}
-                                    variant='contained'
-                                    // onClick={() => this.props.handleSort(method, [], 0)}
-                                >
-                                    {method}
-                                </Button>
-                            )
-                        })}
                         {/* <Button
                             className={this.props.working ? 'mobile-sort disable-button header-button' : 'mobile-sort header-button'}
                             style={{backgroundColor: '#3f51b5'}}
