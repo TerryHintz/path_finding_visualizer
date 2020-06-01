@@ -129,7 +129,7 @@ export function bfs(grid, start, end){
     let queue = [];
     let search = [];
 
-    queue.push({x: start.startX, y: start.startY, distance: 0});
+    queue.push({x: start.startX, y: start.startY, distance: 0, prev: null});
     // trail.push({x, y, distance: 0, prev: null});
 
     while(queue.length){
@@ -144,45 +144,63 @@ export function bfs(grid, start, end){
         if(x > 0){
             if(gridCopy[y][x-1] === 0){
                 gridCopy[y][x-1] = 'v';
-                queue.push({x: x-1, y: y, distance: distance + 1});
-                search.push({x: x-1, y: y, distance: distance + 1});
+                queue.push({x: x-1, y: y, distance: distance + 1, prev: current});
+                search.push({x: x-1, y: y, distance: distance + 1, prev: current});
             } else if(gridCopy[y][x-1] === 'e') {
-                search.push({x: x-1, y: y, distance: distance + 1});
-                return [[], search, xMax + 1];
+                search.push({x: x-1, y: y, distance: distance + 1, prev: current});
+                const trail = breadthTrail(search);
+                return [trail, search, xMax + 1];
             }
         }
         // up
         if(y > 0){
             if(gridCopy[y-1][x] === 0){
                 gridCopy[y-1][x] = 'v';
-                queue.push({x: x, y: y-1, distance: distance + 1});
-                search.push({x: x, y: y-1, distance: distance + 1});
+                queue.push({x: x, y: y-1, distance: distance + 1, prev: current});
+                search.push({x: x, y: y-1, distance: distance + 1, prev: current});
             } else if(gridCopy[y-1][x] === 'e') {
-                search.push({x: x, y: y-1, distance: distance + 1});
-                return [[], search, xMax + 1];
+                search.push({x: x, y: y-1, distance: distance + 1, prev: current});
+                const trail = breadthTrail(search);
+                return [trail, search, xMax + 1];
             }
         }
         // right
         if(x < xMax){
             if(gridCopy[y][x+1] === 0){
                 gridCopy[y][x+1] = 'v';
-                queue.push({x: x+1, y: y, distance: distance + 1});
-                search.push({x: x+1, y: y, distance: distance + 1});
+                queue.push({x: x+1, y: y, distance: distance + 1, prev: current});
+                search.push({x: x+1, y: y, distance: distance + 1, prev: current});
             } else if(gridCopy[y][x+1] === 'e') {
-                search.push({x: x+1, y: y, distance: distance + 1});
-                return [[], search, xMax + 1];
+                search.push({x: x+1, y: y, distance: distance + 1, prev: current});
+                const trail = breadthTrail(search);
+                return [trail, search, xMax + 1];
             }
         }
         // down
         if(y < yMax){
             if(gridCopy[y+1][x] === 0){
                 gridCopy[y+1][x] = 'v';
-                queue.push({x: x, y: y+1, distance: distance + 1});
-                search.push({x: x, y: y+1, distance: distance + 1});
+                queue.push({x: x, y: y+1, distance: distance + 1, prev: current});
+                search.push({x: x, y: y+1, distance: distance + 1, prev: current});
             } else if(gridCopy[y+1][x] === 'e') {
-                search.push({x: x, y: y+1, distance: distance + 1});
-                return [[], search, xMax + 1];
+                search.push({x: x, y: y+1, distance: distance + 1, prev: current});
+                const trail = breadthTrail(search);
+                return [trail, search, xMax + 1];
             }
         }
     }
+    return [[], search, xMax + 1];
+}
+
+function breadthTrail(search){
+    let trail = [];
+    const len = search.length;
+    let tail = search[len - 1];
+    trail.push(tail);
+    while(tail.prev){
+        tail = tail.prev;
+        trail.push(tail);
+    }
+    trail.reverse();
+    return trail;
 }
