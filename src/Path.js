@@ -113,7 +113,7 @@ class Path extends Component {
 
     createGrid = () => {
         let width = Math.floor(window.innerWidth / 32);
-        let height = Math.floor(window.innerHeight / 39);
+        let height = Math.floor(window.innerHeight / 41);
         if(height < 15){
             height = 15;
         }
@@ -186,6 +186,11 @@ class Path extends Component {
                     speed = {this.state.speed}
                     animating = {this.state.animating}
                 />
+                <div className='footer-path'>
+                    <img alt='github' className='github-icon' src={require('./GitHub-Mark-32px.png')}></img>
+                    <a className='my-name' href='https://github.com/TerryHintz'>{"Leo Zhang"}</a>
+                    <img alt='github' className='github-icon' src={require('./GitHub-Mark-32px.png')}></img>
+                </div>
             </div>
         )
     }

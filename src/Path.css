@@ -74,6 +74,24 @@
     margin: 0 8px !important;
 }
 
+.my-name {
+    margin: 0 10px;
+    font-size: 20px;
+    color: gray;
+}
+
+.github-icon {
+    height: 25px;
+}
+
+.footer-path {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
 @media only screen and (max-width: 750px) {
     .header-button {
         font-size: 9px !important;
