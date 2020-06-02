@@ -14,7 +14,7 @@ class Controls extends Component{
                     return(
                         <Button
                             key={speed}
-                            className={'header-button'}
+                            className={'path-speed-button'}
                             disabled={this.props.animating}
                             style={{backgroundColor: this.props.animating ? 'grey' : this.props.speed === speed ? 'rgb(220, 0, 78)' : '#3f51b5'}}
                             variant='contained'

@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 import './Path.css';
 import Button from '@material-ui/core/Button';
+import CasinoIcon from '@material-ui/icons/Casino';
 // import Drawer from '@material-ui/core/Drawer';
 
 const path_algorithms = [
-    'Depth First Search',
-    'Breadth First Search',
+    {full: 'Depth First Search', short: 'DFS'},
+    {full: 'Breadth First Search', short: 'BFS'},
 ];
 
 class Header extends Component {
@@ -18,6 +19,9 @@ class Header extends Component {
     }
 
     render() {
+
+        const window_width = window.innerWidth;
+
         return(
             <div className='header'>
                     <div className='header-section'>
@@ -25,12 +29,12 @@ class Header extends Component {
                             return (
                                 <Button
                                     className={'header-button'}
-                                    style={{backgroundColor: this.props.method === method ? 'rgb(220, 0, 78)' : '#3f51b5'}}
-                                    key={method}
+                                    style={{backgroundColor: this.props.method === method.full ? 'rgb(220, 0, 78)' : '#3f51b5'}}
+                                    key={method.full}
                                     variant='contained'
-                                    onClick={() => this.props.handleButton(method)}
+                                    onClick={() => this.props.handleButton(method.full)}
                                 >
-                                    {method}
+                                    {window_width > 500 ? method.full : method.short}
                                 </Button>
                             )
                         })}
@@ -43,7 +47,7 @@ class Header extends Component {
                             variant='contained'
                             onClick={() => this.props.handleButton('randomize')}
                         >
-                            {'Randomize Grid'}
+                            {window_width > 500 ? 'Randomize Grid' : <CasinoIcon/>}
                         </Button>
                         <Button
                             disabled={this.props.animated}

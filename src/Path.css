@@ -66,5 +66,18 @@
 }
 
 .path-control-panel {
-    margin-top: 20px;
+    margin: 20px 0;
+}
+
+.path-speed-button {
+    color: white !important;
+    margin: 0 8px !important;
+}
+
+@media only screen and (max-width: 500px) {
+    .path-speed-button {
+        font-size: 10px !important;
+        margin: 0 4px !important;
+        padding: 6px 10px !important;
+    }
 }
