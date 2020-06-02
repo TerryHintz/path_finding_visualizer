@@ -1,4 +1,4 @@
-export function dfs(grid, start, end) {
+export function greedy(grid, start, end) {
     let gridCopy = grid;
     let x = start.startX;
     let y = start.startY;
@@ -119,10 +119,87 @@ function getPriority(x, y, endX, endY){
     }
 }
 
-export function bfs(grid, start, end){
+export function dfs(grid, start, end) {
     let gridCopy = grid;
+    let x = start.startX;
+    let y = start.startY;
     const endX = end.endX;
     const endY = end.endY;
+    const xMax = grid[0].length - 1;
+    const yMax = grid.length - 1;
+
+    let trail = [];
+    let search = [];
+    
+
+    while(x !== endX || y !== endY){
+        search.push({x, y});
+        // let priority = getPriority(x, y, endX, endY);
+        let priority = ['left', 'up', 'right', 'down'];
+        while(priority.length){
+            if(priority[0] === 'left'){
+                if(x > 0){
+                    if(gridCopy[y][x-1] === 0 || gridCopy[y][x-1] === 'e'){
+                        trail.push({x, y});
+                        gridCopy[y][x-1] = 'v';
+                        x = x - 1;
+                        break;
+                    }
+                }
+            } else if(priority[0] === 'up'){
+                if(y > 0){
+                    if(gridCopy[y-1][x] === 0 || gridCopy[y-1][x] === 'e'){
+                        trail.push({x, y});
+                        gridCopy[y-1][x] = 'v';
+                        y = y - 1;
+                        break;
+                    }
+                }
+            } else if(priority[0] === 'right'){
+                if(x < xMax){
+                    if(gridCopy[y][x+1] === 0 || gridCopy[y][x+1] === 'e'){
+                        trail.push({x, y});
+                        gridCopy[y][x+1] = 'v';
+                        x = x + 1;
+                        break;
+                    }
+                }
+            } else if(priority[0] === 'down'){
+                if(y < yMax){
+                    if(gridCopy[y+1][x] === 0 || gridCopy[y+1][x] === 'e'){
+                        trail.push({x, y});
+                        gridCopy[y+1][x] = 'v';
+                        y = y + 1;
+                        break;
+                    }
+                }
+            }
+            priority.shift();
+        }
+        if(priority.length === 0){
+            if(trail.length === 0){
+                console.log('no path');
+                return [[], search, xMax + 1];
+            }
+            let prev = trail.pop();
+            if(prev.x === x && prev.y === y){
+                prev = trail.pop();
+            }
+            x = prev.x;
+            y = prev.y;
+        }
+    }
+    gridCopy[endY][endX] = 'e';
+    trail.push({x, y});
+    search.push({x, y});
+    console.log('found exit at ' + x + ', ' + y);
+    return [trail, search, xMax + 1];
+}
+
+export function bfs(grid, start, end){
+    let gridCopy = grid;
+    // const endX = end.endX;
+    // const endY = end.endY;
     const xMax = grid[0].length - 1;
     const yMax = grid.length - 1;
 

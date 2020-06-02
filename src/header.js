@@ -2,16 +2,17 @@ import React, {Component} from 'react';
 import './Path.css';
 import Button from '@material-ui/core/Button';
 // import CasinoIcon from '@material-ui/icons/Casino';
-// import Drawer from '@material-ui/core/Drawer';
+import Drawer from '@material-ui/core/Drawer';
 
 const path_algorithms = [
     {full: 'Depth First Search', short: 'DFS'},
     {full: 'Breadth First Search', short: 'BFS'},
+    {full: 'Heuristic Depth First Search', short: 'HDFS'},
 ];
 
 class Header extends Component {
     state = {
-        
+        drawer: false,
     }
 
     toggleDrawer = () => {
@@ -23,30 +24,29 @@ class Header extends Component {
         const window_width = window.innerWidth;
 
         return(
-            <div className='header'>
+            <div className='path-header'>
                     <div className='header-section'>
                         {path_algorithms.map((method) => {
                             return (
                                 <Button
-                                    className={'header-button'}
+                                    className={'header-button path-algo'}
                                     style={{backgroundColor: this.props.method === method.full ? 'rgb(220, 0, 78)' : '#3f51b5'}}
                                     key={method.full}
                                     variant='contained'
                                     onClick={() => this.props.handleButton(method.full)}
                                 >
-                                    {window_width > 500 ? method.full : method.short}
+                                    {method.full}
                                 </Button>
                             )
                         })}
-                        {window_width > 1000 &&
-                            <Button
-                                className={'header-button'}
-                                color='primary'
-                                variant='contained'
-                            >
-                                {'More algorithms soon!'}
-                            </Button>
-                        }
+                        <Button
+                            className={'header-button path-drawer'}
+                            color='primary'
+                            variant='contained'
+                            onClick={() => this.toggleDrawer()}
+                        >
+                            {'Algorithms'}
+                        </Button>
                     </div>
                     <div className='header-section'>
                         <Button
@@ -68,6 +68,20 @@ class Header extends Component {
                             {this.props.animating ? 'Terminate' : 'Animate'}
                         </Button>
                     </div>
+                    <Drawer anchor={'bottom'} open={this.state.drawer} onClose={() => this.toggleDrawer()}>
+                        {path_algorithms.map((method) => {
+                            return (
+                                <div
+                                    key={method.full + ' mobile'}
+                                    onClick={() => this.props.handleButton(method.full)}
+                                    style={{backgroundColor: this.props.method === method.full ? 'salmon' : 'white'}}
+                                    className='path-mobile-button'
+                                >
+                                    {method.full}
+                                </div>
+                            )
+                        })}
+                    </Drawer>
                 </div>
         )
     }

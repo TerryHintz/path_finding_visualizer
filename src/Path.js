@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
-import './Path.css'
-import Header from './header'
-import Controls from './Controls'
+import './Path.css';
+import Header from './header';
+import Controls from './Controls';
 
 import StartIcon from '@material-ui/icons/PlayArrow';
 import TargetIcon from '@material-ui/icons/FilterTiltShift';
 
-import {dfs} from './Algorithms'
-import {bfs} from './Algorithms'
+import {dfs} from './Algorithms';
+import {bfs} from './Algorithms';
+import {greedy} from './Algorithms';
 
 var timeouts = [];
 
@@ -45,6 +46,9 @@ class Path extends Component {
                 if(this.state.method === 'Breadth First Search'){
                     res = bfs(copy, this.state.start, this.state.end);
                 }
+                if(this.state.method === 'Heuristic Depth First Search'){
+                    res = greedy(copy, this.state.start, this.state.end);
+                }
                 if(res){
                     this.setState({animating: true});
                     this.animate(res);
@@ -57,10 +61,13 @@ class Path extends Component {
                 this.createGrid();
                 break;
             case 'Depth First Search':
-                this.setState({method: 'Depth First Search'});
+                this.setState({method});
                 break;
             case 'Breadth First Search':
-                this.setState({method: 'Breadth First Search'});
+                this.setState({method});
+                break;
+            case 'Heuristic Depth First Search':
+                this.setState({method});
                 break;
             default:
                 console.warn('Case not found');
